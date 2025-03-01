@@ -1,12 +1,33 @@
 from django.db import models
 
-class Trip(models.Model):
-    current_location = models.CharField(max_length=255)
-    pickup_location = models.CharField(max_length=255)
-    dropoff_location = models.CharField(max_length=255)
-    cycle_hours = models.DecimalField(max_digits=5, decimal_places=2)
-    route_details = models.TextField()
-    log_sheets = models.TextField()
+class Log(models.Model):
+    date = models.DateField()
+    driver_name = models.CharField(max_length=255)
+    truck_number = models.IntegerField()
+    
+    current_lat = models.FloatField()
+    current_lng = models.FloatField()
+    pickup_lat = models.FloatField()
+    pickup_lng = models.FloatField()
+    dropoff_lat = models.FloatField()
+    dropoff_lng = models.FloatField()
 
     def __str__(self):
-        return f"Trip from {self.pickup_location} to {self.dropoff_location}"
+        return f"Log {self.id} - {self.driver_name} ({self.date})"
+
+class CycleHours(models.Model):
+    log = models.ForeignKey(Log, related_name='cycle_hours', on_delete=models.CASCADE)
+    status_id = models.IntegerField()
+    start_hour = models.TimeField()
+    end_hour = models.TimeField()
+    
+    start_lat = models.FloatField()
+    start_lng = models.FloatField()
+    end_lat = models.FloatField()
+    end_lng = models.FloatField()
+
+    distance = models.FloatField()
+    annotations = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Cycle {self.id} - Log {self.log.id}"
