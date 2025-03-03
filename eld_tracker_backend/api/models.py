@@ -7,27 +7,29 @@ class Log(models.Model):
     
     current_lat = models.FloatField()
     current_lng = models.FloatField()
+    current_location_address = models.CharField(max_length=255)
+
     pickup_lat = models.FloatField()
     pickup_lng = models.FloatField()
+    pickup_location_address = models.CharField(max_length=255)
+
     dropoff_lat = models.FloatField()
     dropoff_lng = models.FloatField()
-
-    def __str__(self):
-        return f"Log {self.id} - {self.driver_name} ({self.date})"
+    dropoff_location_address = models.CharField(max_length=255)
 
 class CycleHours(models.Model):
-    log = models.ForeignKey(Log, related_name='cycle_hours', on_delete=models.CASCADE)
+    log = models.ForeignKey(Log, related_name="cycle_hours", on_delete=models.CASCADE)
     status_id = models.IntegerField()
     start_hour = models.TimeField()
     end_hour = models.TimeField()
-    
+
     start_lat = models.FloatField()
     start_lng = models.FloatField()
+    start_location_address = models.CharField(max_length=255)
+
     end_lat = models.FloatField()
     end_lng = models.FloatField()
+    end_location_address = models.CharField(max_length=255)
 
     distance = models.FloatField()
-    annotations = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"Cycle {self.id} - Log {self.log.id}"
+    annotations = models.TextField(null=True, blank=True)

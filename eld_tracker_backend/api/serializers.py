@@ -24,7 +24,9 @@ class CycleHoursSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CycleHours
-        fields = ['id', 'log', 'status_id', 'start_hour', 'end_hour', 'start_location', 'end_location', 'distance', 'annotations']
+        fields = ['id', 'log', 'status_id', 'start_hour', 'end_hour',
+                  'start_location', 'start_location_address',
+                  'end_location', 'end_location_address', 'distance', 'annotations']
 
 
 class LogSerializer(serializers.ModelSerializer):
@@ -57,4 +59,8 @@ class LogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Log
-        fields = ['id', 'date', 'driver_name', 'truck_number', 'current_location', 'pickup_location', 'dropoff_location', 'cycle_hours']
+        fields = ['id', 'date', 'driver_name', 'truck_number',
+                  'current_location', 'current_location_address',
+                  'pickup_location', 'pickup_location_address',
+                  'dropoff_location', 'dropoff_location_address',
+                  'cycle_hours']
